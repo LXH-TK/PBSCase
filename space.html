@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>空间维度</title>
+    <!-- fas, fab, fa-1x~fa-10x -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/mdb.min.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!--        左侧菜单 -->
+        <div class="left-side-menu">
+            <div class="slimScrollDiv">
+                <a class="lsm-header text-center white-text" style="line-height: 100px; display: block;">
+                    <span class="fab fa-playstation fa-2x mr-2" style="vertical-align: text-bottom;"></span>
+                    <span>伪基站分析</span>
+                </a>
+                <ul class="lsm-list">
+                    <li class="lsm-list-item">
+                        <a class="navbar-brand white-text collapse-toggler" data-toggle="collapse" data-target="#monthNav" href="javascripts:;"><i class="fas fa-calendar-alt mr-3" style="font-size: 20px"></i>月份<i class="fas fa-angle-down fa-1x" style="position: absolute; right: 1.25rem; margin-top:.2rem;"></i></a>
+                        <div class="collapse navbar-collapse pl-4" id="monthNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link white-text" href="javascripts:;" title="2月">2月</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link white-text" href="javascripts:;" title="3月">3月</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link white-text" href="javascripts:;" title="4月">4月</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="lsm-list-item" data-dimen="space"><a class="navbar-brand active" href="#"><i class="fas fa-map-marked-alt mr-3"></i>空间维度</a></li>
+                    <li class="lsm-list-item" data-dimen="time"><a class="navbar-brand" href="time.html"><i class="fas fa-clock mr-3" style="font-size: 18px"></i>时间维度</a></li>
+                    <li class="lsm-list-item" data-dimen="info"><a class="navbar-brand" href="info.html"><i class="fas fa-envelope mr-3" style="font-size: 18px"></i>信息维度</a></li>
+                    <li class="lsm-list-item" data-dimen="multi"><a class="navbar-brand" href="multi.html"><i class="fas fa-code-branch mr-3 ml-1" style="font-size: 18px"></i>多维度</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--        主体内容-->
+        <div class="content-page pb-4">
+            <div class="content">
+                <!--                顶部的时间条 -->
+                <div class="navbar-top light-shadow">
+                    <svg viewbox="0 0 1080 72" id="timeline" width="100%" height="88"></svg>
+                </div>
+                <!--                内容容器 -->
+                <div class="container-fluid">
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="card light-shadow rounded-8" style="padding: 12px 16px;">
+                                <div class="switch">
+                                    遮罩
+                                    <label class="ml-2 mb-1">
+                                        <input type="checkbox" id="maskSwitch" checked class="business">
+                                        <span class="lever"></span>
+                                    </label>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-9 col-md-12 mt-3">
+                            <!--                            地图 -->
+                            <div class="card light-shadow mapcard rounded-8">
+                                <div id="mapsvg"></div>
+                                <!--
+                                <div class="map-zoomin" style="top: 12px; left: 12px"><i class="fas fa-plus"></i></div>
+                                <div class="map-zoomout" style="left: 12px; top: 48px"><i class="fas fa-minus"></i></div>
+-->
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-12 mt-3">
+                            <!--                            电话列表 -->
+                            <div class="card light-shadow px-3 py-2 rounded-8" id="phone-card">
+                                <div class="row" id="dot-list-con">
+                                    <div class="col-6 px-2">
+                                        <ul class="dot-list">
+                                            <!--                                            <li><i class="fas fa-circle"></i>92000</li>-->
+                                        </ul>
+                                    </div>
+                                    <div class="col-6 px-2">
+                                        <ul class="dot-list">
+                                            <!--                                            <li><i class="fas fa-circle"></i>92000</li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 hide" id="detail-con">
+                                    <div class="col-12">
+                                        <h2 id="detail-phone">17367</h2>
+                                        <button class="btn btn-sm rounded-8" id="anim-btn" style="font-size: 14px; background: #727cf5">伪基站位置运动观察</button><br>
+                                        <button class="btn btn-sm rounded-8" id="hideline-btn" style="font-size: 14px; background: #727cf5">隐藏直线</button><br>
+                                        <button class="btn btn-sm rounded-8" id="back-btn" style="font-size: 14px; background: #727cf5">返回</button>
+                                    </div>
+                                </div>
+                                <div id="slimScrollBar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <svg width="100" height="150" style="display: none">
+        <rect x="0" width="15" fill="#d1c9b8"></rect>
+        <rect x="25" width="15" fill="#d1c9b8"></rect>
+        <rect x="50" width="15" fill="#d1c9b8"></rect>
+        <rect x="75" width="15" fill="#d1c9b8"></rect>
+    </svg>
+
+    <div id="tooltip">
+        <p><strong id="label"></strong></p>
+        <p id="value" class="mb-2">Value:&nbsp;This is a sentence.<span></span></p>
+    </div>
+
+    <script src="javascripts/jquery-3.3.1.min.js"></script>
+    <script src="javascripts/popper.min.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script src="javascripts/mdb.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <script src="javascripts/customize/data.js"></script>
+    <script src="javascripts/customize/timeline2.js"></script>
+    <script src="javascripts/customize/mapbox.js"></script>   
+    <script src="javascripts/customize/fruit-space.js"></script>
+    <script>
+        $("#phone-card").on("scroll", function(e) {
+            let totalScroll = this.scrollHeight - this.offsetHeight; // 内容滑动距离
+            let scroll = this.offsetHeight - $("#slimScrollBar")[0].offsetHeight; // 滚动条总滑动距离 600 - 480
+            let dist = this.scrollTop; // 滑动的距离
+            let dtop = dist + scroll * (dist / totalScroll); // 滚动条需要下移的距离
+            $("#slimScrollBar").css("top", dtop + "px");
+        }).on("mouseleave", function() {
+            $("#slimScrollBar").css("display", "none");
+            //            console.log("mouseleave");
+        }).on("mouseenter", function() {
+            $("#slimScrollBar").css("display", "block");
+        }).on("mousewheel", function(e) {
+            $("#slimScrollBar").css("opacity", 0.4);
+            let deltaY = e.originalEvent.deltaY; // 向下为正，125为最小单位
+            let scroll = deltaY / 125 * 24; // 一次24
+            this.scrollBy(0, scroll);
+        });
+    </script>
+
+</body>
+
+</html>
